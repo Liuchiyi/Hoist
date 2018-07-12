@@ -14,4 +14,7 @@
         email=#{email}
         where id=#{id}
     </update>
+    <insert id="insert">
+        INSERT into hoist_user(account,name,password,email) VALUES (#{account},#{name},#{password},#{email})
+    </insert>
 </mapper>

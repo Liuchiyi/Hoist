@@ -23,7 +23,7 @@ public class LoginHandler {
             session.setAttribute("currentUser",user);
         } catch (Exception e) {
             request.setAttribute("message",e.getMessage());
-            return "forward:/login.jsp";
+            return "forward:/login/login.jsp";
         }
         return "redirect:/index.do";
     }
@@ -31,6 +31,29 @@ public class LoginHandler {
     @RequestMapping("/index.do")
     public String index(){
         return "index";
+    }
+
+    @RequestMapping("/register.do")
+    public String register(String account, String name,String email, String password, HttpServletRequest request){
+        try {
+            boolean flag = fun.register(account,name,password,email);
+            if(flag) request.setAttribute("message","用户注册成功");
+            else request.setAttribute("message","用户注册失败，请重新注册");
+        } catch (Exception e) {
+            request.setAttribute("message",e.getMessage());
+
+        }
+        return "forward:/login/register.jsp";
+    }
+
+    @RequestMapping("/registerpage.do")
+    public String registerpage(){
+        return "forward:/login/register.jsp";
+    }
+
+    @RequestMapping("/loginpage.do")
+    public String loginpage(){
+        return "forward:/login/login.jsp";
     }
 
 }

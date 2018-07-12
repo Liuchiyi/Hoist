@@ -13,6 +13,7 @@ import static com.chiyi.common.AssertThrowUtil.*;
 @Service
 public class UserFunctionImpl implements UserFunction {
 
+
     @Autowired
     UserDao userDao;
     @Override
@@ -28,6 +29,22 @@ public class UserFunctionImpl implements UserFunction {
             throw new ThisSystemException("密码错误！");
         }
         return userEntity;
+    }
+
+    @Override
+    public boolean register(String account, String name, String password, String email) throws Exception {
+        //1 验证用户是否存在
+        UserEntity userEntity;
+        userEntity = (UserEntity) userDao.select("account",account);
+        assertNull("账户已存在",userEntity);
+        userEntity = (UserEntity) userDao.select("name",name);
+        assertNull("姓名已存在",userEntity);
+        userEntity = (UserEntity) userDao.select("email",email);
+        assertNull("邮箱已存在",userEntity);
+        //2 插入用户
+        UserEntity newUser = new UserEntity(account,name,password,email);
+        userDao.insert(newUser);
+        return true;
     }
 
     @Override
@@ -55,4 +72,5 @@ public class UserFunctionImpl implements UserFunction {
         userDao.update(userEntity);
         return userEntity;
     }
+
 }
