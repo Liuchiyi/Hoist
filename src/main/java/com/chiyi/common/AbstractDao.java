@@ -12,6 +12,7 @@ public interface AbstractDao<T> {
     void update(T t)throws Exception;
 
     T select(@Param("key") String ukfield, @Param("value") Object value)throws Exception;
+
     boolean exists(@Param("key") String ukfield, @Param("value") Object value)throws Exception;
     List<T> selectLike(@Param("key") String key)throws Exception;
 }

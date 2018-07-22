@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="static/js/sweet-alert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="static/js/sweet-alert.css">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>测试记录查询</title>
@@ -281,7 +283,7 @@
         <li class="header">选择查询项</li>
         <li class="treeview active">
           <ul class="treeview-menu">
-            <li><a href="#" style="text-align: center;font-size: large;color: white"><i class="fa fa-circle-o text-blue" ></i> 电动葫芦</a></li>
+            <li><a href="motorSearch.html" style="text-align: center;font-size: large;color: white"><i class="fa fa-circle-o text-blue" ></i> 电动葫芦</a></li>
             <li><a href="testSearch.html" style="text-align: center;font-size: large;color: white"><i class="fa fa-circle-o text-yellow" ></i> 测试记录</a></li>
             <li><a href="#" style="text-align: center;font-size: large;color: white"><i class="fa fa-circle-o text-red" ></i> 退出系统</a></li>
           </ul>
@@ -306,10 +308,10 @@
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
 
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="电动葫芦ID">
+                  <input id="motorid" type="text" name="table_search" class="form-control pull-right" placeholder="电动葫芦ID">
 
                   <div class="input-group-btn">
-                    <button id="login" type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    <button onclick="showMotorData()" id="search" type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                   </div>
                 </div>
               </div>
@@ -317,7 +319,7 @@
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
 
-              <table class="table table-hover">
+              <table id = "t" class="table table-hover">
                 <tr>
                   <th>电动葫芦ID</th>
                   <th>生产厂家</th>
@@ -330,7 +332,29 @@
                 </tbody>
               </table>
             </div>
-            <!-- /.box-body -->
+
+            <nav align="center" id="page_nav">
+              <ul class="pagination" id="page_prev">
+                <li id="prev">
+                  <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">«</span>
+                  </a>
+                </li>
+              </ul>
+              <ul class="pagination" id="page_ul">
+
+              </ul>
+              <ul class="pagination" id="page_next">
+                <li id="next">
+                  <a href="#" aria-label="Next">
+                    <span aria-hidden="true">»</span>
+                  </a>
+                </li>
+              </ul>
+
+            </nav>
+
+              <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
@@ -557,6 +581,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="static/dist/js/demo.js"></script>
 
-<script src="static/Myjs/simple.js"></script>
+<script src="static/Myjs/alertWindow.js"></script>
+<script type="text/javascript" src="static/Myjs/motor.js"></script>
 </body>
 </html>

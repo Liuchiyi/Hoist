@@ -7,6 +7,9 @@
     <!-- 使用注解来请求映射-->
     <mvc:annotation-driven/>
 
+    <!-- 静态资源(js、image等)的访问 -->
+    <mvc:default-servlet-handler/>
+
     <!--视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--重定向时是否添加上下文路径-->
