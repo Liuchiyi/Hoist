@@ -5,32 +5,35 @@ import com.chiyi.user.function.UserFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/user")
 public class LoginHandler {
 
     @Autowired
     UserFunction fun;
 
-    @RequestMapping("/login.do")
+    @RequestMapping(value = "/login")
+    @ResponseBody
     public String login(String account, String password, HttpServletRequest request){
         try {
             UserEntity user=fun.login(account,password);
             HttpSession session = request.getSession();
             session.setAttribute("currentUser",user);
         } catch (Exception e) {
-            request.setAttribute("message",e.getMessage());
-            return "forward:/login/login.jsp";
+            e.printStackTrace();
+            return "error";
         }
-        return "redirect:/index.do";
+        return "success";
     }
 
     @RequestMapping("/index.do")
     public String index(){
-        return "index";
+        return "testSearch";
     }
 
     @RequestMapping("/register.do")

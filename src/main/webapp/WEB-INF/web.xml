@@ -50,7 +50,7 @@
   </servlet-mapping>
 
   <welcome-file-list>
-    <welcome-file>/motorSearch.html</welcome-file>
+    <welcome-file>/login/index.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

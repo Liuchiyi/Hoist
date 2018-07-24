@@ -11,9 +11,9 @@ function page(){
         type:"POST",
         dataType:"json",
         timeout:1000,
-        error:function(){
-            alert("ajax error");
-        },
+        // error:function(){
+        //     alert("ajax error");
+        // },
         success:function(data){
             rowTotal=data.length;
             if(rowTotal == 0){

@@ -11,9 +11,9 @@ function page(){
         type:"POST",
         dataType:"json",
         timeout:1000,
-        error:function(){
-            alert("ajax error");
-        },
+        // error:function(){
+        //     alert("ajax error");
+        // },
         success:function(data){
             rowTotal=data.length;
             pageTotal=Math.ceil(rowTotal/pageSize);//上取整
@@ -147,6 +147,7 @@ function showTestData() {
                     + '<td >' +data.efficiency+ '</td></tr>'
                 $('#测试记录').append(newRow);
             }
+            window.location.href="motorSearch.html";
         }
 
     })

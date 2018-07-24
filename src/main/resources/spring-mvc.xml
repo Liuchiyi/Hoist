@@ -14,8 +14,8 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--重定向时是否添加上下文路径-->
         <property name="redirectContextRelative" value="true"/>
-        <property name="prefix" value="/WEB-INF/views/"></property>
-        <property name="suffix" value=".jsp" ></property>
+        <property name="prefix" value="/views/"></property>
+        <property name="suffix" value=".html" ></property>
     </bean>
 
     <!--扫描所有的控制器-->

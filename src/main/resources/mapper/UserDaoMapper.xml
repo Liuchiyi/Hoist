@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chiyi.user.dao.UserDao">
-    <select id="selectById" resultType="com.chiyi.user.entity.UserEntity">
+    <select id="select" resultType="com.chiyi.user.entity.UserEntity">
         select * from hoist_user where ${key}=#{value}
     </select>
     <update id="update">
