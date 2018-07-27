@@ -18,5 +18,5 @@ public interface UserFunction {
     public UserEntity updatePassword(String id, String oldPassword, String newPassword, String newPasswordConfirm)throws Exception;
 
     @Transactional
-    public boolean register(String account, String name, String password, String email)throws Exception;
+    public void register(String account, String name, String password, String email)throws Exception;
 }

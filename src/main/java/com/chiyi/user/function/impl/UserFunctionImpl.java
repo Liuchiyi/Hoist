@@ -32,9 +32,13 @@ public class UserFunctionImpl implements UserFunction {
     }
 
     @Override
-    public boolean register(String account, String name, String password, String email) throws Exception {
+    public void register(String account, String name, String password, String email) throws Exception {
         //1 验证用户是否存在
         UserEntity userEntity;
+        account = $("账户不能为空",account);
+        name = $("名字不能为空",name);
+        email = $("邮箱不能为空",email);
+        password = $("密码不能为空",password);
         userEntity = (UserEntity) userDao.select("account",account);
         assertNull("账户已存在",userEntity);
         userEntity = (UserEntity) userDao.select("name",name);
@@ -44,7 +48,6 @@ public class UserFunctionImpl implements UserFunction {
         //2 插入用户
         UserEntity newUser = new UserEntity(account,name,password,email);
         userDao.insert(newUser);
-        return true;
     }
 
     @Override

@@ -21,6 +21,7 @@ public class LoginHandler {
     @ResponseBody
     public String login(String account, String password, HttpServletRequest request){
         try {
+//            System.out.println("开始："+System.currentTimeMillis());
             UserEntity user=fun.login(account,password);
             HttpSession session = request.getSession();
             session.setAttribute("currentUser",user);
@@ -31,32 +32,19 @@ public class LoginHandler {
         return "success";
     }
 
-    @RequestMapping("/index.do")
-    public String index(){
-        return "testSearch";
-    }
 
-    @RequestMapping("/register.do")
-    public String register(String account, String name,String email, String password, HttpServletRequest request){
+    @RequestMapping("/register")
+    @ResponseBody
+    public String register(String account, String name,String email, String password){
         try {
-            boolean flag = fun.register(account,name,password,email);
-            if(flag) request.setAttribute("message","用户注册成功");
-            else request.setAttribute("message","用户注册失败，请重新注册");
+             fun.register(account,name,password,email);
         } catch (Exception e) {
-            request.setAttribute("message",e.getMessage());
-
+            e.printStackTrace();
+            return "error";
         }
-        return "forward:/login/register.jsp";
+        return "success";
     }
 
-    @RequestMapping("/registerpage.do")
-    public String registerpage(){
-        return "forward:/login/register.jsp";
-    }
 
-    @RequestMapping("/loginpage.do")
-    public String loginpage(){
-        return "forward:/login/login.jsp";
-    }
 
 }
