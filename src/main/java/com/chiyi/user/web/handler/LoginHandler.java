@@ -2,6 +2,9 @@ package com.chiyi.user.web.handler;
 
 import com.chiyi.user.entity.UserEntity;
 import com.chiyi.user.function.UserFunction;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,16 +23,27 @@ public class LoginHandler {
     @RequestMapping(value = "/login")
     @ResponseBody
     public String login(String account, String password, HttpServletRequest request){
+//        try {
+////            System.out.println("开始："+System.currentTimeMillis());
+//            UserEntity user=fun.login(account,password);
+//            HttpSession session = request.getSession();
+//            session.setAttribute("currentUser",user);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "error";
+//        }
+//        return "success";
+
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(account, password);
         try {
-//            System.out.println("开始："+System.currentTimeMillis());
-            UserEntity user=fun.login(account,password);
-            HttpSession session = request.getSession();
-            session.setAttribute("currentUser",user);
+            subject.login(token);
+            return "success";
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
         }
-        return "success";
+
     }
 
 
@@ -46,5 +60,26 @@ public class LoginHandler {
     }
 
 
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "index";
+    }
+
+    @RequestMapping("/admin")
+    public String admin(HttpServletRequest request){
+        return "success";
+    }
+
+    @RequestMapping("/student")
+    public String student(HttpServletRequest request){
+        return "success";
+    }
+
+    @RequestMapping("/teacher")
+    public String teacher(HttpServletRequest request){
+        return "success";
+    }
 
 }

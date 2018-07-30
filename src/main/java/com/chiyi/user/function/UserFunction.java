@@ -1,7 +1,10 @@
 package com.chiyi.user.function;
 
 import com.chiyi.user.entity.UserEntity;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 
 public interface UserFunction {
@@ -19,4 +22,10 @@ public interface UserFunction {
 
     @Transactional
     public void register(String account, String name, String password, String email)throws Exception;
+
+    public UserEntity getByUserAccount(String account);
+
+    public Set<String> getRoles(String account);
+
+    public Set<String> getPermissions(String account);
 }

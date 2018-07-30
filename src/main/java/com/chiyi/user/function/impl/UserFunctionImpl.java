@@ -8,6 +8,8 @@ import com.chiyi.user.function.UserFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 import static com.chiyi.common.AssertThrowUtil.*;
 
 @Service
@@ -50,6 +52,8 @@ public class UserFunctionImpl implements UserFunction {
         userDao.insert(newUser);
     }
 
+
+
     @Override
     public UserEntity updatePassword(String id,String oldPassword, String newPassword, String newPasswordConfirm) throws Exception {
         //1验证参数
@@ -74,6 +78,22 @@ public class UserFunctionImpl implements UserFunction {
 
         userDao.update(userEntity);
         return userEntity;
+    }
+
+
+    @Override
+    public UserEntity getByUserAccount(String account) {
+        return userDao.getByUserAccount(account);
+    }
+
+    @Override
+    public Set<String> getRoles(String account) {
+        return userDao.getRoles(account);
+    }
+
+    @Override
+    public Set<String> getPermissions(String account) {
+        return userDao.getPermissions(account);
     }
 
 }
