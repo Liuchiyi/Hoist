@@ -3,10 +3,7 @@ package com.realm;
 
 import com.chiyi.user.entity.UserEntity;
 import com.chiyi.user.function.UserFunction;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -30,14 +27,33 @@ public class MyRealm extends AuthorizingRealm {
     }
     //验证当前登录的用户，获取认证信息。
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        String account=(String) token.getPrincipal();//获取账号
-        UserEntity user=userFunctionImpl.getByUserAccount(account);
-        if(user!=null){
-            AuthenticationInfo authcInfo =new SimpleAuthenticationInfo(user.getAccount(),user.getPassword(),"myRealm");
-            return authcInfo;
-        }else{
-            return null;
+//        String account=(String) token.getPrincipal();//获取账号
+//        UserEntity user=userFunctionImpl.getByUserAccount(account);
+//        if(user!=null){
+//            AuthenticationInfo authcInfo =new SimpleAuthenticationInfo(user.getAccount(),user.getPassword(),"myRealm");
+//            return authcInfo;
+//        }else{
+//            return null;
+//        }
+        UsernamePasswordToken upToken = (UsernamePasswordToken)token;
+        String username = upToken.getUsername();
+
+
+        UserEntity user = userFunctionImpl.getByUserAccount(username);
+        if(user ==null){
+            throw new UnknownAccountException("用户不存在！");
         }
+		/*if ("monster".equals(username)) {
+            throw new LockedAccountException("用户被锁定");
+        }*/
+
+
+        Object principal = username;
+        String credentials = user.getPassword();
+        String realmName = getName();
+        ByteSource credentialsSalt = ByteSource.Util.bytes(username);
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, credentials,credentialsSalt,realmName);
+        return info;
     }
 
     public static void main(String[] args){
@@ -52,9 +68,9 @@ public class MyRealm extends AuthorizingRealm {
 
 
         String hashAlgorithmName = "MD5";
-        String credentials = "admin";
+        String credentials = "123456";
         int hashIterations = 1024;
-        ByteSource credentialsSalt = ByteSource.Util.bytes("admin");
+        ByteSource credentialsSalt = ByteSource.Util.bytes("1111");
         Object obj = new SimpleHash(hashAlgorithmName, credentials, credentialsSalt, hashIterations);
         System.out.println(obj);
 

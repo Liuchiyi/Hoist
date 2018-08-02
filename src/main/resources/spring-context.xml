@@ -44,7 +44,15 @@
     </bean>
 
     <!--自定义Realm-->
-    <bean id="myRealm" class="com.realm.MyRealm"/>
+    <bean id="myRealm" class="com.realm.MyRealm">
+    <!-- 配置密码匹配器 -->
+    <property name="credentialsMatcher">
+        <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+            <property name="hashAlgorithmName" value="MD5"></property> <!-- 加密算法的名称 -->
+            <property name="hashIterations" value="1024"></property> <!-- 配置加密的次数 -->
+        </bean>
+    </property>
+    </bean>
 
     <!--安全管理-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

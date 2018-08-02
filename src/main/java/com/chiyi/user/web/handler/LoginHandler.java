@@ -4,7 +4,9 @@ import com.chiyi.user.entity.UserEntity;
 import com.chiyi.user.function.UserFunction;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,9 @@ public class LoginHandler {
 
     @Autowired
     UserFunction fun;
+
+    final static String hashAlgorithmName = "MD5";
+    final static int hashIterations = 1024;
 
     @RequestMapping(value = "/login")
     @ResponseBody
@@ -50,8 +55,10 @@ public class LoginHandler {
     @RequestMapping("/register")
     @ResponseBody
     public String register(String account, String name,String email, String password){
+        ByteSource credentialsSalt = ByteSource.Util.bytes(account); //盐
+        String passwordMD5 = new SimpleHash(hashAlgorithmName, password, credentialsSalt, hashIterations).toString();//密码MD5加密
         try {
-             fun.register(account,name,password,email);
+             fun.register(account,name,passwordMD5,email);
         } catch (Exception e) {
             e.printStackTrace();
             return "error";

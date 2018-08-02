@@ -15,7 +15,7 @@
         where id=#{id}
     </update>
     <insert id="insert">
-        INSERT into hoist_user(account,name,password,email) VALUES (#{account},#{name},#{password},#{email})
+        INSERT into hoist_user(account,name,password,email,role_id) VALUES (#{account},#{name},#{password},#{email},2)
     </insert>
 
     <select id="getByUserAccount" parameterType="String" resultType="com.chiyi.user.entity.UserEntity">
